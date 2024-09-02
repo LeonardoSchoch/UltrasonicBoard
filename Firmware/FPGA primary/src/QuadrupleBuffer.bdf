@@ -845,7 +845,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 	(parameter
 		"g_CLKS_PER_BIT"
-		"20"
+		"45"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
