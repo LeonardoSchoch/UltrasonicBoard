@@ -3,7 +3,10 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity AllChannels is
-   generic(NBLOCKS: integer := 256);
+   generic (
+		NBLOCKS: integer := 256;
+		NOUT: integer := 31
+	);
 	
 	port (
 		clk8 : in  STD_LOGIC;
@@ -17,7 +20,7 @@ entity AllChannels is
 		address : in std_logic_vector(7 downto 0); --256 different address for the pulse / duty blocks
 
 		--data_out : out std_logic_vector((NBLOCKS/8-1) downto 0)
-		data_out : out std_logic_vector(31 downto 0)
+		data_out : out std_logic_vector(NOUT-1 downto 0)
 		--data_demux : out std_logic_vector(NBLOCKS-1 downto 0)
 	);
 	
