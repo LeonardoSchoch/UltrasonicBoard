@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 entity AllChannels is
    generic (
 		NBLOCKS: integer := 256;
-		NOUT: integer := 31
+		NOUT: integer := 32
 	);
 	
 	port (
