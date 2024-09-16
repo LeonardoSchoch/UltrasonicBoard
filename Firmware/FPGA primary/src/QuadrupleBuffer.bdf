@@ -1076,11 +1076,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt -408 224)
 )
 (connector
-	(text "CLK_8" (rect -216 176 -183 188)(font "Arial" ))
-	(pt -208 192)
-	(pt -176 192)
-)
-(connector
 	(pt 232 344)
 	(pt 232 272)
 )
@@ -1173,6 +1168,19 @@ https://fpgasoftware.intel.com/eula.
 	(text "COUNT[7]" (rect 512 -136 563 -124)(font "Arial" ))
 	(pt 584 -120)
 	(pt 504 -120)
+)
+(connector
+	(pt -176 192)
+	(pt -184 192)
+)
+(connector
+	(pt -184 192)
+	(pt -184 144)
+)
+(connector
+	(text "CLK_8" (rect -200 128 -167 140)(font "Arial" ))
+	(pt -184 144)
+	(pt -192 144)
 )
 (junction (pt -752 240))
 (text "CLK_8 is running at 10.24MHz" (rect -200 8 -29 22)(font "Arial" (font_size 8)))
