@@ -65,20 +65,6 @@ begin
 	-- Stimulus process
 	stim_process : process
 	begin
-		-- Initialize inputs
-		MISC_B <= '0';
-
-		-- Wait for a few clock cycles
-		wait for 100 ns;
-
-		-- Apply test stimulus
-		MISC_B <= '1';
-		wait for 40 ns;
-		MISC_B <= '0';
-		wait for 40 ns;
-
-		-- Wait to observe outputs
-		wait for 200 ns;
 
 		-- End simulation
 		wait;
