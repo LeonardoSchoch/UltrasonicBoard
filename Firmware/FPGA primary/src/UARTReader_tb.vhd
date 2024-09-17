@@ -8,7 +8,7 @@ end entity UARTReader_tb;
 architecture Behavioral of UARTReader_tb is
 
 	-- Constant declarations
-	constant G_CLKS_PER_BIT : integer := 1;
+	constant G_CLKS_PER_BIT : integer := 4;
 	
 	-- Signal declarations
 	signal I_CLK			: std_logic := '0';
@@ -24,15 +24,15 @@ architecture Behavioral of UARTReader_tb is
 	) is
 	begin
 		UART_PIN <= '0'; -- start
-		wait for 100 ns;
+		wait for 400 ns;
 			
-		for i in 7 downto 0 loop
+		for i in 0 to 7 loop
 			UART_PIN <= DATA_BYTE(i);
-			wait for 100 ns;
+			wait for 400 ns;
 		end loop;
 
 		UART_PIN <= '1'; -- stop
-		wait for 100 ns;
+		wait for 400 ns;
 	end procedure;
 
 	-- Component declaration for the Unit Under Test (UUT)
@@ -80,36 +80,14 @@ begin
 	
 		wait for 100 ns;
 		
-		-- send start bit + data byte + stop bit
-		I_RX_SERIAL <= '0'; -- start
-		wait for 100 ns;
-		
-		-- swap buffers command
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		I_RX_SERIAL <= '0';
-		wait for 100 ns;
-		I_RX_SERIAL <= '1';
-		wait for 100 ns;
-		
-		I_RX_SERIAL <= '1'; -- stop
-		wait for 100 ns;
-		
-		-- wait between data bytes
-		wait for 100 ns;
-		
-		-- send start sequence
+		-- send start receiving phases command
 		UartStimulus("11111110", I_RX_SERIAL);
+		-- send set phase command
+		UartStimulus("01010101", I_RX_SERIAL);
+		-- send set phase command
+		UartStimulus("00101010", I_RX_SERIAL);
+		-- send swap buffers command
+		UartStimulus("11111101", I_RX_SERIAL);
 		
 		-- wait to observe outputs
 		wait for 500 ns;
