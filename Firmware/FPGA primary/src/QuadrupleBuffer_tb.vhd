@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity QuadrupleBuffer_tb is
 end entity QuadrupleBuffer_tb;
@@ -7,16 +8,35 @@ end entity QuadrupleBuffer_tb;
 architecture Behavior of QuadrupleBuffer_tb is
 	
 	-- Signal declarations
-	signal CLK				: std_logic;
-	signal MISC_B			: std_logic;
-	signal MISC_D			: std_logic;
-	signal MISC_E			: std_logic;
-	signal DATA				: std_logic_vector(31 downto 0);
-	signal LED				: std_logic_vector(3 downto 0);
-	signal SHIFT_CLOCK_1	: std_logic;
-	signal SHIFT_CLOCK_2	: std_logic;
-	signal LATCH_CLOCK_1	: std_logic;
-	signal LATCH_CLOCK_2	: std_logic;
+	signal CLK				: std_logic := '0';
+	signal MISC_B			: std_logic := '0';
+	signal MISC_D			: std_logic := '0';
+	signal MISC_E			: std_logic := '0';
+	signal DATA				: std_logic_vector(31 downto 0) := (others => '0');
+	signal LED				: std_logic_vector(3 downto 0) := (others => '0');
+	signal SHIFT_CLOCK_1	: std_logic := '0';
+	signal SHIFT_CLOCK_2	: std_logic := '0';
+	signal LATCH_CLOCK_1	: std_logic := '0';
+	signal LATCH_CLOCK_2	: std_logic := '0';
+	
+	-- UART stimulus procedure
+	-- sends 1 start bit, 1 data byte and 1 stop bit
+	procedure UartStimulus (
+		 constant DATA_BYTE : in  std_logic_vector(7 downto 0);
+		 signal UART_PIN : out std_logic
+	) is
+	begin
+		UART_PIN <= '0'; -- start
+		wait for 4400 ns;
+			
+		for i in 0 to 7 loop
+			UART_PIN <= DATA_BYTE(i);
+			wait for 4400 ns;
+		end loop;
+
+		UART_PIN <= '1'; -- stop
+		wait for 4400 ns;
+	end procedure;
 
 	-- Component declaration for the Unit Under Test (UUT)
 	component QuadrupleBuffer
@@ -64,9 +84,31 @@ begin
 
 	-- Stimulus process
 	stim_process : process
+		variable PHASE : std_logic_vector(7 downto 0) := (others => '0');
 	begin
+	
+		wait for 100 ns;
+		
+		-- send start receiving phases command
+		UartStimulus("11111110", MISC_B);
+		
+		-- for loop iterates through 256 phases
+		for i in 0 to 255 loop
+		
+			PHASE := "000" & std_logic_vector(to_unsigned(i, 5));
+			
+			-- send set phase command
+			UartStimulus(PHASE, MISC_B);
+			wait for 100 ns;
+		end loop;
+		
+		-- send swap buffers command
+		UartStimulus("11111101", MISC_B);
+		
+		-- wait to observe outputs
+		wait for 5000 ns;
 
-		-- End simulation
+		-- end simulation
 		wait;
 	end process;
 
