@@ -8,7 +8,7 @@ end entity AllChannels_tb;
 architecture Behavioral of AllChannels_tb is
 	
 	-- Constant declarations
-	constant NBLOCKS 	: integer := 400;
+	constant NBLOCKS 	: integer := 256;
 	
 	-- Signal declarations
 	signal CLK8			: std_logic := '0';
@@ -16,8 +16,8 @@ architecture Behavioral of AllChannels_tb is
 	signal SWAP			: std_logic := '0';
 	signal PHASE		: std_logic_vector(7 downto 0) := (others => '0');
 	signal SET			: std_logic := '0';
-	signal ADDRESS		: std_logic_vector(8 downto 0) := (others => '0');
-	signal DATA_OUT	: std_logic_vector(49 downto 0) := (others => '0');
+	signal ADDRESS		: std_logic_vector(7 downto 0) := (others => '0');
+	signal DATA_OUT	: std_logic_vector(31 downto 0) := (others => '0');
 
 	-- Component declaration for the Unit Under Test (UUT)
 	component AllChannels
@@ -31,8 +31,8 @@ architecture Behavioral of AllChannels_tb is
 			SWAP		: in std_logic;
 			PHASE		: in std_logic_vector(7 downto 0);
 			SET		: in std_logic;
-			ADDRESS	: in std_logic_vector(8 downto 0);
-			DATA_OUT	: out std_logic_vector(49 downto 0)
+			ADDRESS	: in std_logic_vector(7 downto 0);
+			DATA_OUT	: out std_logic_vector(31 downto 0)
 		);
 	end component;
 
@@ -91,9 +91,9 @@ begin
 		wait for 1600 ns;
 		
 		-- for loop iterates through 256 blocks
-		for i in 0 to 399 loop
+		for i in 0 to 255 loop
 			-- convert integer i, first to unsigned of length 8, second to std_logic_vector
-			ADDRESS <= std_logic_vector(to_unsigned(i, 9));
+			ADDRESS <= std_logic_vector(to_unsigned(i, 8));
 			
 			-- convert integer i, first to unsigned of length 7, second to std_logic_vector
 			-- concat 0 to front of to fit phase command
