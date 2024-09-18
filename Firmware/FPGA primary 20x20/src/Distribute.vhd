@@ -45,7 +45,7 @@ type T_PHASE_CORRECTION is array (0 to 399) of integer range 0 to 255;
 																		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 		
 	 signal s_boardEnable : STD_LOGIC := '1';
-	 signal s_ByteCounter : integer range 0 to 399 := 0;
+	 signal s_ByteCounter : integer range 0 to 400 := 0;
 	  
 	 signal s_data_out : STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
 	 signal s_address : std_logic_vector(8 downto 0) := (others => '0');
