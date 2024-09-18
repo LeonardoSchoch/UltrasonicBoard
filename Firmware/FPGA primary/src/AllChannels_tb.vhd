@@ -88,7 +88,7 @@ begin
 		
 		-- set set signal
 		SET <= '1';
-		wait for 100 ns;
+		wait for 1600 ns;
 		
 		-- for loop iterates through 256 blocks
 		for i in 0 to 255 loop
@@ -99,17 +99,17 @@ begin
 			-- concat 0 to front of to fit phase command
 			PHASE <= "000" & std_logic_vector(to_unsigned(i, 5));
 			
-			wait for 100 ns;
+			wait for 1600 ns;
 		end loop;
 		
 		-- reset set signal
-		-- set swap signal
 		SET <= '0';
+		-- set swap signal
 		SWAP <= '1';
-		wait for 100 ns;
+		wait for 1600 ns;
 
 		-- wait to observe outputs
-		wait for 500 ns;
+		wait for 5000 ns;
 
 		-- end simulation
 		wait;
