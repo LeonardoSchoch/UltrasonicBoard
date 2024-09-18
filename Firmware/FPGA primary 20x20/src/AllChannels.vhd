@@ -4,8 +4,7 @@ use IEEE.numeric_std.all;
 
 entity AllChannels is
    generic (
-		NBLOCKS: integer := 256;
-		NOUT: integer := 32
+		NBLOCKS: integer := 256
 	);
 	
 	port (
@@ -17,10 +16,10 @@ entity AllChannels is
 		swap : in  STD_LOGIC := '0';
 		phase : in std_logic_vector(7 downto 0);
 		set : in  STD_LOGIC := '0';
-		address : in std_logic_vector(7 downto 0); --256 different address for the pulse / duty blocks
+		address : in std_logic_vector(8 downto 0); --400 different address for the pulse / duty blocks
 
 		--data_out : out std_logic_vector((NBLOCKS/8-1) downto 0)
-		data_out : out std_logic_vector(NOUT-1 downto 0)
+		data_out : out std_logic_vector(49 downto 0)
 		--data_demux : out std_logic_vector(NBLOCKS-1 downto 0)
 	);
 	
